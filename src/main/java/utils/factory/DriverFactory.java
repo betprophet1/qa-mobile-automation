@@ -1,5 +1,6 @@
 package utils.factory;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -53,7 +54,7 @@ public class DriverFactory {
             put(Platforms.BS_IOS, PredefineCap.BS_IOS);
             put(Platforms.LD_IOS, PredefineCap.LD_IOS);
             put(Platforms.DESKTOP_WEB, PredefineCap.DESKTOP_WEB);
-//            put(Platforms.ANDROID, PredefineCap.ANDROID);
+            put(Platforms.ANDROID, PredefineCap.ANDROID);
             put(Platforms.IOS, PredefineCap.IOS);
         }
     };
@@ -250,6 +251,10 @@ public class DriverFactory {
             }
         }
         return classes;
+    }
+
+    public static AppiumDriver getCurrentAppiumDriver() {
+        return (DriverFactory.isIOSRun) ? DriverFactory.getIOSDriver() : DriverFactory.getAndroidDriver();
     }
 
 }

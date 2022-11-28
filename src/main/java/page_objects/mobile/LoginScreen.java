@@ -17,10 +17,12 @@ public class LoginScreen extends BaseScreen {
         return new LoginScreen();
     }
 
+    @AndroidFindBy(xpath = "//android.widget.EditText[contains(@text,'Email Address')]")
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"Email Address\"])[6]/XCUIElementTypeTextField")
     @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
     public MobileElement Email_Textbox;
 
+    @AndroidFindBy(xpath = "//android.widget.EditText[contains(@text,'Password')]")
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"Password\"])[2]/XCUIElementTypeSecureTextField")
     @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
     public MobileElement Password_Textbox;
@@ -29,7 +31,7 @@ public class LoginScreen extends BaseScreen {
     @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
     public MobileElement Hide_Password_Icon;
 
-    @AndroidFindBy(id = "io.appium.android.apis:id/text")
+    @AndroidFindBy(xpath = "//android.widget.TextView[contains(@text,'Continue')]")
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"Continue\"])[2]")
     @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
     public MobileElement Continue_Button;

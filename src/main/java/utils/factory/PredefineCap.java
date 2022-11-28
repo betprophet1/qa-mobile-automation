@@ -14,9 +14,19 @@ public class PredefineCap {
         {
             setCapability("automationName", "XCUITest");
             setCapability("platformName", "iOS");
-            setCapability("bundleId", "");
+            setCapability("bundleId", "com.prophetexchange.staging");
             setCapability("platformVersion", "15.5");
-            setCapability("deviceName", "iPhone 13 Pro Max");
+            setCapability("deviceName", "iPhone 13 Pro");
+        }
+    };
+
+    public static final DesiredCapabilities ANDROID = new DesiredCapabilities() {
+        {
+            setCapability("platformName", "Android");
+            setCapability("platformVersion", "11.0");
+            setCapability("deviceName", "emulator-5554");
+            setCapability("appPackage", "com.prophetexchange.staging");
+            setCapability("appActivity", "com.prophetexchange.MainActivity");
         }
     };
 
@@ -43,7 +53,7 @@ public class PredefineCap {
             setCapability("project", "Prophet");
             setCapability("browserstack.idleTimeout", "300");
             setCapability("os_version", "15");
-            setCapability("app", "bs://1af1d06d47e2917b94e3120f7fb3cf91ac457895");
+            setCapability("app", "bs://69b362bf4dce9d2d088bed3f1f6c623dc5172f95");
         }
     };
 

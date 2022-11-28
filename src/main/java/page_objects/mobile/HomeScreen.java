@@ -21,6 +21,7 @@ public class HomeScreen extends BaseScreen {
     @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
     public MobileElement Allow_Button;
 
+    @AndroidFindBy(id = "com.android.permissioncontroller:id/permission_allow_foreground_only_button")
     @iOSXCUITFindBy(accessibility = "Allow While Using App")
     @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
     public MobileElement Allow_While_Using_App;
@@ -37,20 +38,10 @@ public class HomeScreen extends BaseScreen {
     @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
     public MobileElement Update_Button;
 
-    @iOSXCUITFindBy(accessibility = "Sports")
+    @AndroidFindBy(xpath = "//android.widget.TextView[contains(@text,'View All')]")
+    @iOSXCUITFindBy(accessibility = "(//XCUIElementTypeOther[@name=\"View All\"])[2]")
     @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
-    public MobileElement Sport_Tab;
+    public MobileElement View_All_Button;
 
-    @iOSXCUITFindBy(accessibility = "Bets")
-    @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
-    public MobileElement Bets_Tab;
-
-    @iOSXCUITFindBy(accessibility = "Home")
-    @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
-    public MobileElement Home_Tab;
-
-    @iOSXCUITFindBy(accessibility = "Account")
-    @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
-    public MobileElement Account_Tab;
 
 }

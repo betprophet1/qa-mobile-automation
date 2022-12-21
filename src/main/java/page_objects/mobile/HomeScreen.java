@@ -43,5 +43,9 @@ public class HomeScreen extends BaseScreen {
     @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
     public MobileElement View_All_Button;
 
+    @AndroidFindBy(id = "NFL-match-1")
+    @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
+    public MobileElement First_Match;
+
 
 }

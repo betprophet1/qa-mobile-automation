@@ -20,4 +20,16 @@ public interface Environments extends Config {
     @Key("page.time_out")
     @DefaultValue("30")
     long TIME_OUTS();
+
+    @Key("BS.USER")
+    String BS_USER();
+
+    @Key("BS.KEY")
+    String BS_KEY();
+
+    @Key("USERNAME")
+    String USERNAME();
+
+    @Key("PASSWORD")
+    String PASSWORD();
 }

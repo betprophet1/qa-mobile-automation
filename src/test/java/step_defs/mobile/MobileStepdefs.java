@@ -3,22 +3,23 @@ package step_defs.mobile;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import io.cucumber.datatable.DataTable;
 import org.assertj.core.api.SoftAssertions;
 import page_objects.mobile.*;
+import utils.Config;
+
+import java.util.List;
+import java.util.Map;
 
 public class MobileStepdefs {
 
     @When("^I log in to iOS app$")
     public void iLogIntoIOSApp() throws InterruptedException {
         HomeScreen.INSTANCE().Allow_Button.click();
-//        HomeScreen.INSTANCE().Allow_While_Using_App.click();
-//        Thread.sleep(10000);
         HomeScreen.INSTANCE().Login_Button.click();
-        LoginScreen.INSTANCE().Email_Textbox.sendKeys("quoc.la+1@betprophet.co");
-//        LoginScreen.INSTANCE().Hide_Password_Icon.click();
-        LoginScreen.INSTANCE().Password_Textbox.sendKeys("Betprophet@123");
+        LoginScreen.INSTANCE().Email_Textbox.sendKeys(Config.ENV.USERNAME());
+        LoginScreen.INSTANCE().Password_Textbox.sendKeys(Config.ENV.PASSWORD());
         LoginScreen.INSTANCE().Continue_Button.click();
-//        LoginScreen.INSTANCE().Continue_Button.click();
         Thread.sleep(5000);
         HomeScreen.INSTANCE().Allow_While_Using_App.click();
     }
@@ -28,11 +29,9 @@ public class MobileStepdefs {
         HomeScreen.INSTANCE().Account_Tab.click();
         Thread.sleep(1000);
         AccountScreen.INSTANCE().Login_Button.click();
-        LoginScreen.INSTANCE().Email_Textbox.sendKeys("quoc.la+1@betprophet.co");
-//        LoginScreen.INSTANCE().Hide_Password_Icon.click();
-        LoginScreen.INSTANCE().Password_Textbox.sendKeys("Betprophet@123");
+        LoginScreen.INSTANCE().Email_Textbox.sendKeys(Config.ENV.USERNAME());
+        LoginScreen.INSTANCE().Password_Textbox.sendKeys(Config.ENV.PASSWORD());
         LoginScreen.INSTANCE().Continue_Button.click();
-//        LoginScreen.INSTANCE().Continue_Button.click();
         Thread.sleep(5000);
         HomeScreen.INSTANCE().Allow_While_Using_App.click();
     }
@@ -67,12 +66,44 @@ public class MobileStepdefs {
     }
 
 
-    @When("place a request Moneyline bet on {string}")
-    public void placeARequestMoneylineBetOn(String platform) {
-        if (platform.equalsIgnoreCase("Android")) {
-            AccountScreen.INSTANCE().Home_Tab.click();
-        }
-        HomeScreen.INSTANCE().View_All_Button.click();
+    @When("place a request Moneyline bet with")
+    public void placeARequestMoneylineBetOn(DataTable data) {
+        List<Map<String, String>> list = data.asMaps(String.class, String.class);
+        String stake = list.get(0).get("Stake");
+        String odds = list.get(0).get("Odds");
+        HomeScreen.INSTANCE().First_Match.click();
+        PlaceWagerScreen.INSTANCE().Close_Button.click();
+        PlaceWagerScreen.INSTANCE().Request_Moneyline_Left_Level_1.click();
+        PlaceWagerScreen.INSTANCE().Stake_Input.sendKeys(stake);
+        PlaceWagerScreen.INSTANCE().Odds_Input.sendKeys(odds);
+        PlaceWagerScreen.INSTANCE().Place_Bet_Button.click();
+    }
+
+    @And("place a request Spread bet with")
+    public void placeARequestSpreadBetOnWith(String platform, DataTable data) {
+        List<Map<String, String>> list = data.asMaps(String.class, String.class);
+        String stake = list.get(0).get("Stake");
+        String odds = list.get(0).get("Odds");
+        HomeScreen.INSTANCE().First_Match.click();
+        PlaceWagerScreen.INSTANCE().Close_Button.click();
+        PlaceWagerScreen.INSTANCE().Request_Spread_Left_Level_1.click();
+        PlaceWagerScreen.INSTANCE().Stake_Input.sendKeys(stake);
+        PlaceWagerScreen.INSTANCE().Odds_Input.sendKeys(odds);
+        PlaceWagerScreen.INSTANCE().Place_Bet_Button.click();
+    }
+
+    @And("place a request Total bet with")
+    public void placeARequestTotalBetWith(DataTable data) {
+        List<Map<String, String>> list = data.asMaps(String.class, String.class);
+        String stake = list.get(0).get("Stake");
+        String odds = list.get(0).get("Odds");
+        HomeScreen.INSTANCE().swipeFromTopToBottom();
+        HomeScreen.INSTANCE().First_Match.click();
+        PlaceWagerScreen.INSTANCE().Close_Button.click();
+        PlaceWagerScreen.INSTANCE().Request_Total_Left_Level_1.click();
+        PlaceWagerScreen.INSTANCE().Stake_Input.sendKeys(stake);
+        PlaceWagerScreen.INSTANCE().Odds_Input.sendKeys(odds);
+        PlaceWagerScreen.INSTANCE().Place_Bet_Button.click();
     }
 
     @When("I log out to Android app successfully")
@@ -122,5 +153,25 @@ public class MobileStepdefs {
         SoftAssertions softly = new SoftAssertions();
         AccountScreen.INSTANCE().Self_Exclusion.click();
         softly.assertThat(SelfExclusionDetailScreen.INSTANCE().Self_Exclude_Button.isDisplayed()).isTrue();
+    }
+
+    @When("click Confirm place wager")
+    public void clickConfirmPlaceWager() {
+        PlaceWagerScreen.INSTANCE().Confirm_Button.click();
+    }
+
+    @When("click View ALl Bets")
+    public void clickViewALlBets() {
+        PlaceWagerScreen.INSTANCE().View_My_Bet_Button.click();
+    }
+
+    @Then("verify your bets displaying in Bet Tab with infomation")
+    public void verifyYourBetsDisplayingInBetTabWithInfomation(DataTable data) {
+        List<Map<String, String>> list = data.asMaps(String.class, String.class);
+        SoftAssertions softly = new SoftAssertions();
+        String stake = list.get(0).get("Stake");
+        String odds = list.get(0).get("Odds");
+        softly.assertThat(BetScreen.INSTANCE().Unmatch_Bet_Market_Stake_1.getText()).isEqualTo(stake);
+        softly.assertThat(BetScreen.INSTANCE().Unmatch_Bet_Market_Stake_1.getText()).isEqualTo(odds);
     }
 }

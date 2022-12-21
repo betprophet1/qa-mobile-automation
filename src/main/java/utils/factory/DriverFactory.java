@@ -37,8 +37,7 @@ import static io.github.bonigarcia.wdm.DriverManagerType.CHROME;
 public class DriverFactory {
 
     private final static Logger LOGGER = LogManager.getLogger(DriverFactory.class);
-    private static final String BS_URL = "https://quocla_THUndl:5ent6jtKrEwiQqwDVJ3T@hub-cloud.browserstack.com/wd/hub";
-    private static final String LD_URL = "https://lquoc:WNiUOBTx3G56oIgvpNh0DhL3fC2jzwZkjve0dXbRMVvb3YHwJG@mobile-hub.lambdatest.com/wd/hub";
+    private static final String BS_URL = "https://" + Config.ENV.BS_USER() + ":" + Config.ENV.BS_KEY() + "@hub-cloud.browserstack.com/wd/hub";
     private static WebDriver webDriver = null;
     private static AndroidDriver androidDriver = null;
     private static IOSDriver iosDriver = null;
@@ -151,10 +150,6 @@ public class DriverFactory {
                 break;
             case BS_IOS:
                 iosDriver = new IOSDriver<IOSElement>(new URL(BS_URL), _capabilitiesHashmap.get(_platform));
-                isIOSRun = true;
-                break;
-            case LD_IOS:
-                iosDriver = new IOSDriver<IOSElement>(new URL(LD_URL), _capabilitiesHashmap.get(_platform));
                 isIOSRun = true;
                 break;
             case ANDROID:

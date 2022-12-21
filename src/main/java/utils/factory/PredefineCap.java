@@ -35,11 +35,11 @@ public class PredefineCap {
             setCapability("browserstack.appium_version", "1.21.0");
             setCapability("automationName", "UiAutomator2");
             setCapability("device", "Samsung Galaxy S22 Ultra");
-            setCapability("project", "Test");
-            setCapability("build", "Android Integration Test");
+            setCapability("project", "Prophet Test Android");
+            setCapability("build", "Prophet Android Testing");
             setCapability("browserstack.idleTimeout", "300");
             setCapability("os_version", "12.0");
-            setCapability("app","bs://a82b6b6b66e983ec9e87243fb6a00bd8fea85d0a");
+            setCapability("app","bs://7d20a678bc53bb96245901c484eb5a54f57ce5b3");
             setCapability("autoDismissAlerts", "true");
         }
     };

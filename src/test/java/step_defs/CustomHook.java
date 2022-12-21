@@ -12,6 +12,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import page_objects.mobile.BaseScreen;
 import utils.Config;
 import utils.Platforms;
+import utils.api.testrail.TestRailAPI;
 import utils.factory.DriverFactory;
 import utils.factory.DriverUtils;
 
@@ -44,13 +45,20 @@ public class CustomHook {
 
     @After()
     public void afterEachScenario(Scenario scenarioResult) {
+        TestRailAPI testRailAPI = TestRailAPI.builder().build();
+
         try {
             testDataEmbeddedOnFail(scenarioResult);
             screenshotOnFail(scenarioResult);
-//            if (scenarioResult.isFailed()) {
-//                testDataEmbeddedOnFail(scenarioResult);
-//                screenshotOnFail(scenarioResult);
-//            }
+            if (scenarioResult.isFailed()) {
+                testDataEmbeddedOnFail(scenarioResult);
+                screenshotOnFail(scenarioResult);
+                testRailAPI.updateResult(scenarioResult.getSourceTagNames().toString()
+                        .replaceAll("[^0-9]", ""), "5");
+            } else {
+                testRailAPI.updateResult(scenarioResult.getSourceTagNames().toString()
+                        .replaceAll("[^0-9]", ""), "1");
+            }
         } catch (Exception e) {
             LOGGER.error("Unable to take screenshot");
         } finally {

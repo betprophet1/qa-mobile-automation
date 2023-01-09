@@ -21,7 +21,7 @@ import static io.restassured.RestAssured.given;
 public class TestRailAPI {
 
     public void updateResult(String testID, String status_id) {
-        APIHelper.builder.setBaseUri(APIHelper.baseURL);
+        APIHelper.builder.setBaseUri(APIHelper.testrailBaseURL);
         RequestSpecification requestSpec = APIHelper.builder.build();
         Map<String, String> headerList = new HashMap<>();
         headerList.put("Content-Type", "application/json");
@@ -37,7 +37,7 @@ public class TestRailAPI {
                 .headers(headerList)
                 .body(jObject.toString())
                 .when()
-                .post(APIHelper.baseURL + "/api/v2/add_result_for_case/18/" + testID)
+                .post(APIHelper.testrailBaseURL + "/api/v2/add_result_for_case/18/" + testID)
                 .then()
                 .statusCode(200);
     }

@@ -12,6 +12,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import page_objects.mobile.BaseScreen;
 import utils.Config;
 import utils.Platforms;
+import utils.api.APIHelper;
+import utils.api.nova.NovaAPI;
 import utils.api.testrail.TestRailAPI;
 import utils.factory.DriverFactory;
 import utils.factory.DriverUtils;
@@ -28,6 +30,16 @@ public class CustomHook {
     public void iOpenAWebBrowser() throws MalformedURLException {
         DriverFactory.createWebInstance();
         DriverFactory.initPages("page_objects.desktop_web", DriverFactory.getWebDriver());
+    }
+
+    @Before("@kba")
+    public void prepareDataForKBA() {
+        NovaAPI novaAPI = NovaAPI.builder().build();
+        novaAPI.getCSRFToken();
+        novaAPI.loginNova();
+        novaAPI.getDashBoard();
+        novaAPI.searchByPhone();
+        novaAPI.deleteUser();
     }
 
     @Given("^I open (iOS|Android) app$")
@@ -50,15 +62,15 @@ public class CustomHook {
         try {
             testDataEmbeddedOnFail(scenarioResult);
             screenshotOnFail(scenarioResult);
-            if (scenarioResult.isFailed()) {
-                testDataEmbeddedOnFail(scenarioResult);
-                screenshotOnFail(scenarioResult);
-                testRailAPI.updateResult(scenarioResult.getSourceTagNames().toString()
-                        .replaceAll("[^0-9]", ""), "5");
-            } else {
-                testRailAPI.updateResult(scenarioResult.getSourceTagNames().toString()
-                        .replaceAll("[^0-9]", ""), "1");
-            }
+//            if (scenarioResult.isFailed()) {
+//                testDataEmbeddedOnFail(scenarioResult);
+//                screenshotOnFail(scenarioResult);
+//                testRailAPI.updateResult(scenarioResult.getSourceTagNames().toString()
+//                        .replaceAll("[^0-9]", ""), "5");
+//            } else {
+//                testRailAPI.updateResult(scenarioResult.getSourceTagNames().toString()
+//                        .replaceAll("[^0-9]", ""), "1");
+//            }
         } catch (Exception e) {
             LOGGER.error("Unable to take screenshot");
         } finally {

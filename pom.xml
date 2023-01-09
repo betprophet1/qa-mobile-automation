@@ -11,12 +11,13 @@
     <properties>
         <cucumber.version>4.2.6</cucumber.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <env>test</env>
+        <env>staging</env>
         <build.name.web>Web Automation Test</build.name.web>
+        <build.name.ios>iOS Automation Test</build.name.ios>
         <build.name.android>Android Automation Test</build.name.android>
-        <location>lc</location>
-        <install>false</install>
-        <page.time_out>30</page.time_out>
+        <location>local</location>
+        <install>true</install>
+        <page.time_out>15</page.time_out>
         <junit.version>4.12</junit.version>
         <junit.jupiter.version>5.5.2</junit.jupiter.version>
         <junit.vintage.version>5.5.2</junit.vintage.version>
@@ -103,14 +104,12 @@
             <version>2.12.1</version>
         </dependency>
 
-        <!--        # For OTP generator-->
         <dependency>
-            <groupId>org.jboss.aerogear</groupId>
-            <artifactId>aerogear-otp-java</artifactId>
-            <version>1.0.0</version>
+            <groupId>com.assertthat</groupId>
+            <artifactId>selenium-shutterbug</artifactId>
+            <version>0.6.1</version>
         </dependency>
 
-        <!--        # Fluent Assertion-->
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
@@ -119,14 +118,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!--        # API (Schema and Request)-->
-        <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>json-schema-validator</artifactId>
             <version>4.1.2</version>
@@ -134,7 +125,7 @@
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
-            <version>4.1.0</version>
+            <version>4.3.0</version>
             <scope>compile</scope>
 
         </dependency>
@@ -151,6 +142,66 @@
             <version>28.1-jre</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.imalittletester</groupId>
+            <artifactId>thewaiter</artifactId>
+            <version>1.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>selenium-java</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.awaitility/awaitility -->
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>4.0.3</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.jayway.jsonpath/json-path -->
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
 
     </dependencies>
 
@@ -159,7 +210,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.8.1</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                     <source>1.8</source>
@@ -195,9 +246,9 @@
                         <env>${env}</env>
 <!--                        <BS.USER>${bs_user}</BS.USER>-->
 <!--                        <BS.KEY>${bs_key}</BS.KEY>-->
-<!--                        <BS.BUILD.WEB>${build.name.web}</BS.BUILD.WEB>-->
-<!--                        <BS.BUILD.IOS>${build.name.ios}</BS.BUILD.IOS>-->
-<!--                        <BS.BUILD.ANDROID>${build.name.android}</BS.BUILD.ANDROID>-->
+                        <BS.BUILD.WEB>${build.name.web}</BS.BUILD.WEB>
+                        <BS.BUILD.IOS>${build.name.ios}</BS.BUILD.IOS>
+                        <BS.BUILD.ANDROID>${build.name.android}</BS.BUILD.ANDROID>
                         <location>${location}</location>
                         <install>${install}</install>
                         <page.time_out>${page.time_out}</page.time_out>
@@ -209,7 +260,7 @@
             <plugin>
                 <groupId>net.masterthought</groupId>
                 <artifactId>maven-cucumber-reporting</artifactId>
-                <version>4.8.0</version>
+                <version>5.4.0</version>
                 <executions>
                     <execution>
                         <id>execution</id>
@@ -218,13 +269,14 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <projectName>Project Name</projectName>
+                            <projectName>Prophet Mobile Automation Test</projectName>
                             <!-- optional, per documentation set this to "true" to bypass generation of Cucumber Reports entirely, defaults to false if not specified -->
                             <skip>false</skip>
                             <!-- output directory for the generated report -->
                             <outputDirectory>${project.build.directory}</outputDirectory>
                             <!-- optional, defaults to outputDirectory if not specified -->
                             <inputDirectory>${project.build.directory}/jsonReports</inputDirectory>
+                            <setSkippedAsNotFailing>true</setSkippedAsNotFailing>
                             <jsonFiles>
                                 <!-- supports wildcard or name pattern -->
                                 <param>**/*.json</param>
@@ -251,5 +303,4 @@
             </testResource>
         </testResources>
     </build>
-
 </project>

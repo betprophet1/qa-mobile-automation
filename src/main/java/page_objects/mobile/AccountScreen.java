@@ -29,6 +29,7 @@ public class AccountScreen extends BaseScreen {
     @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
     public MobileElement Promotional;
 
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text='Withdraw']")
     @iOSXCUITFindBy(accessibility = "Withdraw")
     @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
     public MobileElement Withdraw_Button;
@@ -91,5 +92,4 @@ public class AccountScreen extends BaseScreen {
     @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
     public MobileElement Login_Button;
 
-    //android.widget.TextView[contains(@text,'󰅁')]
 }

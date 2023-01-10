@@ -25,8 +25,8 @@ public class PredefineCap {
             setCapability("platformName", "Android");
             setCapability("platformVersion", "11.0");
             setCapability("deviceName", "emulator-5554");
-            setCapability("appPackage", "com.prophetexchange.staging");
-            setCapability("appActivity", "com.prophetexchange.MainActivity");
+//            setCapability("appPackage", "com.prophetexchange.staging");
+//            setCapability("appActivity", "com.prophetexchange.MainActivity");
         }
     };
 

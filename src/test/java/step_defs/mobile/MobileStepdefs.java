@@ -7,6 +7,7 @@ import io.cucumber.datatable.DataTable;
 import org.assertj.core.api.SoftAssertions;
 import page_objects.mobile.*;
 import utils.Config;
+import utils.factory.DriverUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -27,12 +28,10 @@ public class MobileStepdefs {
     @When("I log in to Android app successfully")
     public void iLogInToAndroidApp() throws InterruptedException {
         HomeScreen.INSTANCE().Account_Tab.click();
-        Thread.sleep(1000);
         AccountScreen.INSTANCE().Login_Button.click();
         LoginScreen.INSTANCE().Email_Textbox.sendKeys(Config.ENV.USERNAME());
         LoginScreen.INSTANCE().Password_Textbox.sendKeys(Config.ENV.PASSWORD());
         LoginScreen.INSTANCE().Continue_Button.click();
-        Thread.sleep(5000);
         HomeScreen.INSTANCE().Allow_While_Using_App.click();
     }
 
@@ -173,5 +172,44 @@ public class MobileStepdefs {
         String odds = list.get(0).get("Odds");
         softly.assertThat(BetScreen.INSTANCE().Unmatch_Bet_Market_Stake_1.getText()).isEqualTo(stake);
         softly.assertThat(BetScreen.INSTANCE().Unmatch_Bet_Market_Stake_1.getText()).isEqualTo(odds);
+    }
+
+    @When("select Account tab")
+    public void selectAccountTab() {
+        HomeScreen.INSTANCE().Account_Tab.click();
+    }
+
+    @Then("verify withdraw money successfully with amount {string}")
+    public void verifyWithdrawMoneySuccessfullyWithAmount(String amount) {
+        AccountScreen.INSTANCE().Withdraw_Button.click();
+        WithdrawScreen.INSTANCE().Amount_Txb.sendKeys(amount);
+        WithdrawScreen.INSTANCE().Online_Banking_Via_Trustly_Cxb.click();
+        WithdrawScreen.INSTANCE().Withdraw_Btn.click();
+        WithdrawScreen.INSTANCE().Search_Bank_Txb.click();
+        WithdrawScreen.INSTANCE().Search_Bank_Txb.sendKeys("DemoBank");
+        WithdrawScreen.INSTANCE().First_Bank_Result.click();
+        WithdrawScreen.INSTANCE().Ok_Got_It_Btn.click();
+        WithdrawScreen.INSTANCE().Username_Bank_Auth_Txb.sendKeys("test");
+        WithdrawScreen.INSTANCE().Password_Bank_Auth_Txb.sendKeys("test");
+        WithdrawScreen.INSTANCE().Agree_And_Sign_In_Bank_Btn.click();
+        WithdrawScreen.INSTANCE().Continue_Btn.click();
+        WithdrawScreen.INSTANCE().Returm_Home_Btn.click();
+    }
+
+    @Then("verify deposit money successfully with amount {string}")
+    public void verifyDepositMoneySuccessfullyWithAmount(String amount) {
+        AccountScreen.INSTANCE().Deposit_Button.click();
+        WithdrawScreen.INSTANCE().Amount_Txb.sendKeys(amount);
+        WithdrawScreen.INSTANCE().Online_Banking_Via_Trustly_Cxb.click();
+        WithdrawScreen.INSTANCE().Withdraw_Btn.click();
+        WithdrawScreen.INSTANCE().Search_Bank_Txb.click();
+        WithdrawScreen.INSTANCE().Search_Bank_Txb.sendKeys("DemoBank");
+        WithdrawScreen.INSTANCE().First_Bank_Result.click();
+        WithdrawScreen.INSTANCE().Ok_Got_It_Btn.click();
+        WithdrawScreen.INSTANCE().Username_Bank_Auth_Txb.sendKeys("test");
+        WithdrawScreen.INSTANCE().Password_Bank_Auth_Txb.sendKeys("test");
+        WithdrawScreen.INSTANCE().Agree_And_Sign_In_Bank_Btn.click();
+        WithdrawScreen.INSTANCE().Continue_Btn.click();
+        WithdrawScreen.INSTANCE().Returm_Home_Btn.click();
     }
 }
